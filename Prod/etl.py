@@ -37,10 +37,10 @@ class FrequencyEncoder(ETL):
 
     TARGET_COL = 'artist_name'
 
-    def __init__(self):
+    def __init__(self, strategy='max'):
         self.frequencies = None
         self.default_value = 0
-
+        self.strategy = strategy
     
     def fit(self, X, y=None):
         freqs = X[self.TARGET_COL].str.split(',').explode().value_counts()
@@ -52,7 +52,17 @@ class FrequencyEncoder(ETL):
 
         X_new = X.copy()
 
-        X_new[self.TARGET_COL] = X[self.TARGET_COL].map(self.frequencies).fillna(self.default_value)
+        if self.strategy == 'max':
+            X_new[self.TARGET_COL] = X[self.TARGET_COL].str.split(',').apply(
+                lambda artists: max(self.frequencies.get(artist, self.default_value) for artist in artists)
+            )
+
+        elif self.strategy == 'sum':
+            X_new[self.TARGET_COL] = X[self.TARGET_COL].str.split(',').apply(
+                lambda artists: sum(self.frequencies.get(artist, self.default_value) for artist in artists)
+            )
+
+        #X_new[self.TARGET_COL] = X[self.TARGET_COL].map(self.frequencies).fillna(self.default_value)
 
         return X_new
 
