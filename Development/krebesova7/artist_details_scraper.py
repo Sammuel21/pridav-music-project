@@ -133,10 +133,7 @@ def enrich_track_data():
             'artist_genres': '|'.join(artist_details[artist['id']]['genres'] 
                                     for artist in track_artists if artist['id'] in artist_details),
             'artist_followers': ','.join(str(artist_details[artist['id']]['followers']) 
-                                       for artist in track_artists if artist['id'] in artist_details),
-            'avg_artist_popularity': sum(artist_details[artist['id']]['popularity'] 
-                                      for artist in track_artists if artist['id'] in artist_details) / len(track_artists)
-                                      if track_artists else 0
+                                       for artist in track_artists if artist['id'] in artist_details)
         }
         enriched_tracks.append(track_data)
     
