@@ -159,6 +159,8 @@ class FollowerCountEncoder(ETL):
         X_new = X.copy()
         
         def process_values(value):
+            if pd.isna(value):
+                return np.nan
             if ',' in str(value):
                 numbers = [int(val.strip()) for val in str(value).split(',')]
                 if self.strategy == 'max':
@@ -184,6 +186,8 @@ class ArtistPopularityEncoder(ETL):
         X_new = X.copy()
         
         def process_values(value):
+            if pd.isna(value):
+                return np.nan
             if ',' in str(value):
                 numbers = [int(val.strip()) for val in str(value).split(',')]
                 if self.strategy == 'max':
