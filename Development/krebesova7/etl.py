@@ -147,7 +147,6 @@ class ConvertNull(ETL):
         return X_new
 
 
-# ETLs by Natalia Krebesova -------------
 
 class FollowerCountEncoder(ETL):
     
@@ -157,7 +156,6 @@ class FollowerCountEncoder(ETL):
         self.strategy = strategy
     
     def transform(self, X, y=None):
-        '''Pocitanie statistiky je mozne robit v transform pretoze zavisi od hodnoty v riadku nie stlpca (je to tam delimitovane v stringu)'''
         X_new = X.copy()
         
         def process_values(value):
@@ -185,7 +183,6 @@ class ArtistPopularityEncoder(ETL):
         self.strategy = strategy
     
     def transform(self, X, y=None):
-        '''Pocitanie statistiky je mozne robit v transform pretoze zavisi od hodnoty v riadku nie stlpca (je to tam delimitovane v stringu)'''
         X_new = X.copy()
         
         def process_values(value):
@@ -202,8 +199,9 @@ class ArtistPopularityEncoder(ETL):
             
         X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_values)
         return X_new
-
-
+    
+    
+    
 
 class AlbumNameEncoder(ETL):
 
@@ -214,7 +212,6 @@ class AlbumNameEncoder(ETL):
         self.default_value = 0
     
     def fit(self, X, y=None):
-        '''Tu sa uz transformacia pocita zo stlpca takze statistika je pocitana len z X_train'''
         freqs = X[self.TARGET_COL].value_counts()
         self.frequencies = freqs.to_dict()
         return self
@@ -225,9 +222,6 @@ class AlbumNameEncoder(ETL):
         X_new = X.copy()
         X_new[self.TARGET_COL] = X[self.TARGET_COL].map(self.frequencies).fillna(self.default_value)
         return X_new
-
-
-#  --------------------------------------
 
 
 
@@ -243,12 +237,29 @@ artist_name_pipeline = Pipeline(steps=[
     ('scaling', StandardScaler())
 ])
 
+follower_count_pipeline = Pipeline(steps=[
+    ('encoding', FollowerCountEncoder()),
+    ('scaling', StandardScaler())
+])
+
+artist_popularity_pipeline = Pipeline(steps=[
+    ('encoding', ArtistPopularityEncoder()),
+    ('scaling', StandardScaler())
+])
+
+album_name_pipeline = Pipeline(steps=[
+    ('encoding', AlbumNameEncoder()),
+    ('scaling', StandardScaler())
+])
 
 transformations = ColumnTransformer(transformers=[
     
     ('onehot_encoding', OneHotEncoder(sparse_output=False), []),
     ('trigonometric_encoding', CircleOfFifthsEncoding(), []),
     ('artist_encoding', artist_name_pipeline, []),
+    ('follower_count_encoding', follower_count_pipeline, []),
+    ('popularity_encoding', artist_popularity_pipeline, []),
+    ('album_encoding', album_name_pipeline, []),
     ('nummeric_processing', numeric_pipeline, [])
 
 ], remainder='drop')
@@ -258,4 +269,3 @@ preprocessing = Pipeline(steps=[
     ('null_values', ConvertNull(columns=[])),
     ('transformation', transformations)
 ])
-
