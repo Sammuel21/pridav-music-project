@@ -30,6 +30,9 @@ class ETL(BaseEstimator, TransformerMixin):
     
     def transform(self, X, y=None):
         return X
+    
+    def set_output(self, *, transform = None):
+        return self
 
 
 
@@ -146,6 +149,88 @@ class ConvertNull(ETL):
         X_new[self.columns] = X_new[self.columns].replace(self.input_value, self.output_value)
         return X_new
 
+
+# ETLs by Natalia Krebesova -------------
+
+class FollowerCountEncoder(ETL):
+    
+    TARGET_COL = 'artist_followers'
+
+    def __init__(self, strategy='max'):
+        self.strategy = strategy
+    
+    def transform(self, X, y=None):
+        '''Pocitanie statistiky je mozne robit v transform pretoze zavisi od hodnoty v riadku nie stlpca (je to tam delimitovane v stringu)'''
+        X_new = X.copy()
+        
+        def process_values(value):
+            if pd.isna(value):
+                return np.nan
+            if ',' in str(value):
+                numbers = [int(val.strip()) for val in str(value).split(',')]
+                if self.strategy == 'max':
+                    return max(numbers)
+                elif self.strategy == 'avg':
+                    return sum(numbers) / len(numbers)
+            else:
+                return int(value)
+            
+        X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_values)
+        return X_new
+
+
+
+class ArtistPopularityEncoder(ETL):
+    
+    TARGET_COL = 'artist_popularities'
+
+    def __init__(self, strategy='max'):
+        self.strategy = strategy
+    
+    def transform(self, X, y=None):
+        '''Pocitanie statistiky je mozne robit v transform pretoze zavisi od hodnoty v riadku nie stlpca (je to tam delimitovane v stringu)'''
+        X_new = X.copy()
+        
+        def process_values(value):
+            if pd.isna(value):
+                return np.nan
+            if ',' in str(value):
+                numbers = [int(val.strip()) for val in str(value).split(',')]
+                if self.strategy == 'max':
+                    return max(numbers)
+                elif self.strategy == 'avg':
+                    return sum(numbers) / len(numbers)
+            else:
+                return int(value)
+            
+        X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_values)
+        return X_new
+
+
+
+class AlbumNameEncoder(ETL):
+
+    TARGET_COL = 'album_name'
+
+    def __init__(self):
+        self.frequencies = None
+        self.default_value = 0
+    
+    def fit(self, X, y=None):
+        '''Tu sa uz transformacia pocita zo stlpca takze statistika je pocitana len z X_train'''
+        freqs = X[self.TARGET_COL].value_counts()
+        self.frequencies = freqs.to_dict()
+        return self
+    
+
+    def transform(self, X, y=None):
+
+        X_new = X.copy()
+        X_new[self.TARGET_COL] = X[self.TARGET_COL].map(self.frequencies).fillna(self.default_value)
+        return X_new
+
+
+#  --------------------------------------
 
 
 
