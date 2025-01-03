@@ -30,7 +30,7 @@ class ETL(BaseEstimator, TransformerMixin):
     
     def transform(self, X, y=None):
         return X
-
+    
 
 
 class FrequencyEncoder(ETL):
@@ -65,7 +65,7 @@ class FrequencyEncoder(ETL):
         #X_new[self.TARGET_COL] = X[self.TARGET_COL].map(self.frequencies).fillna(self.default_value)
 
         return X_new
-
+    
 
 
 class CircleOfFifthsEncoding(ETL):
@@ -125,7 +125,7 @@ class CircleOfFifthsEncoding(ETL):
         X_new['key_y'] = y
 
         return X_new
-
+    
 
 
 class ConvertNull(ETL):
@@ -145,7 +145,7 @@ class ConvertNull(ETL):
         X_new = X.copy()
         X_new[self.columns] = X_new[self.columns].replace(self.input_value, self.output_value)
         return X_new
-
+    
 
 
 class FollowerCountEncoder(ETL):
@@ -172,36 +172,50 @@ class FollowerCountEncoder(ETL):
             
         X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_values)
         return X_new
-
+    
 
 
 class ArtistPopularityEncoder(ETL):
     
     TARGET_COL = 'artist_popularities'
 
-    def __init__(self, strategy='max'):
+    def __init__(self, strategy='both'):
         self.strategy = strategy
     
     def transform(self, X, y=None):
         X_new = X.copy()
         
-        def process_values(value):
+        def process_max(value):
             if pd.isna(value):
                 return np.nan
             if ',' in str(value):
                 numbers = [int(val.strip()) for val in str(value).split(',')]
-                if self.strategy == 'max':
-                    return max(numbers)
-                elif self.strategy == 'avg':
-                    return sum(numbers) / len(numbers)
+                return max(numbers)
             else:
                 return int(value)
             
-        X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_values)
+        def process_avg(value):
+            if pd.isna(value):
+                return np.nan
+            if ',' in str(value):
+                numbers = [int(val.strip()) for val in str(value).split(',')]
+                return sum(numbers) / len(numbers)
+            else:
+                return int(value)
+            
+        if self.strategy == 'max':
+            X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_max)
+        elif self.strategy == 'avg':
+            X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_avg)
+        elif self.strategy == 'both':
+            X_new[f'{self.TARGET_COL}_max'] = X[self.TARGET_COL].apply(process_max)
+            X_new[f'{self.TARGET_COL}_avg'] = X[self.TARGET_COL].apply(process_avg)
+            X_new = X_new.drop(columns=[self.TARGET_COL])
+            
         return X_new
     
     
-    
+
 
 class AlbumNameEncoder(ETL):
 
@@ -222,7 +236,61 @@ class AlbumNameEncoder(ETL):
         X_new = X.copy()
         X_new[self.TARGET_COL] = X[self.TARGET_COL].map(self.frequencies).fillna(self.default_value)
         return X_new
+    
 
+
+class GenreEncoder(ETL):
+    
+    TARGET_COL = 'artist_genres'
+
+    def __init__(self, strategy='max'):
+        self.frequencies = None
+        self.default_value = 0
+        self.strategy = strategy
+    
+    def fit(self, X, y=None):
+        all_genres = []
+        for genres_str in X[self.TARGET_COL]:
+            if pd.isna(genres_str):
+                continue
+            artist_groups = genres_str.split('|')
+            for artist_genres in artist_groups:
+                genres = [g.strip() for g in artist_genres.split(',')]
+                all_genres.extend(genres)
+        
+        freqs = pd.Series(all_genres).value_counts()
+        self.frequencies = freqs.to_dict()
+        return self
+    
+    def transform(self, X, y=None):
+        X_new = X.copy()
+        
+        def process_genres(value):
+            if pd.isna(value):
+                return np.nan
+                
+            unique_genres = set()
+            artist_groups = value.split('|')
+            for artist_genres in artist_groups:
+                genres = [g.strip() for g in artist_genres.split(',')]
+                unique_genres.update(genres)
+            
+            genre_scores = [self.frequencies.get(genre, self.default_value) 
+                          for genre in unique_genres]
+            
+            if not genre_scores:
+                return 0
+            
+            if self.strategy == 'max':
+                return max(genre_scores)
+            elif self.strategy == 'avg':
+                return sum(genre_scores) / len(genre_scores)
+            elif self.strategy == 'sum':
+                return sum(genre_scores)
+        
+        X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_genres)
+        return X_new
+    
 
 
 # --------- Pipelines
@@ -252,6 +320,11 @@ album_name_pipeline = Pipeline(steps=[
     ('scaling', StandardScaler())
 ])
 
+artist_genres_pipeline = Pipeline(steps=[
+    ('encoding', GenreEncoder()),
+    ('scaling', StandardScaler())
+])
+
 transformations = ColumnTransformer(transformers=[
     
     ('onehot_encoding', OneHotEncoder(sparse_output=False), []),
@@ -260,6 +333,7 @@ transformations = ColumnTransformer(transformers=[
     ('follower_count_encoding', follower_count_pipeline, []),
     ('popularity_encoding', artist_popularity_pipeline, []),
     ('album_encoding', album_name_pipeline, []),
+    ('genres_encoding', artist_genres_pipeline, []),
     ('nummeric_processing', numeric_pipeline, [])
 
 ], remainder='drop')
