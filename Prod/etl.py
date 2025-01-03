@@ -30,6 +30,9 @@ class ETL(BaseEstimator, TransformerMixin):
     
     def transform(self, X, y=None):
         return X
+    
+    def set_output(self, *, transform = None):
+        return self
 
 
 
