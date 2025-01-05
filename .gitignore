@@ -5,8 +5,9 @@ Development/gulas16/Data
 
 # krebesova7
 Development/krebesova7/Data
-Development/krebesova7/.env
+Development/krebesova7/__pycache__
 Development/krebesova7/.cache
+Development/krebesova7/to_do.txt
 
 # kenderes2
 Development/kenderes2/Data
