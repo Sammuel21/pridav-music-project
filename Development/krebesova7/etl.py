@@ -31,6 +31,9 @@ class ETL(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         return X
     
+    def set_output(self, *, transform = None):
+        return self
+    
 
 
 class FrequencyEncoder(ETL):
@@ -147,6 +150,7 @@ class ConvertNull(ETL):
         return X_new
     
 
+# ETLs by Natalia Krebesova -------------
 
 class FollowerCountEncoder(ETL):
     
@@ -156,6 +160,7 @@ class FollowerCountEncoder(ETL):
         self.strategy = strategy
     
     def transform(self, X, y=None):
+        '''Pocitanie statistiky je mozne robit v transform pretoze zavisi od hodnoty v riadku nie stlpca (je to tam delimitovane v stringu)'''
         X_new = X.copy()
         
         def process_values(value):
@@ -183,6 +188,7 @@ class ArtistPopularityEncoder(ETL):
         self.strategy = strategy
     
     def transform(self, X, y=None):
+        '''Pocitanie statistiky je mozne robit v transform pretoze zavisi od hodnoty v riadku nie stlpca (je to tam delimitovane v stringu)'''
         X_new = X.copy()
         
         def process_max(value):
@@ -226,6 +232,7 @@ class AlbumNameEncoder(ETL):
         self.default_value = 0
     
     def fit(self, X, y=None):
+        '''Tu sa uz transformacia pocita zo stlpca takze statistika je pocitana len z X_train'''
         freqs = X[self.TARGET_COL].value_counts()
         self.frequencies = freqs.to_dict()
         return self
@@ -290,7 +297,10 @@ class GenreEncoder(ETL):
         
         X_new[self.TARGET_COL] = X[self.TARGET_COL].apply(process_genres)
         return X_new
-    
+
+
+#  --------------------------------------
+
 
 
 # --------- Pipelines
@@ -305,25 +315,30 @@ artist_name_pipeline = Pipeline(steps=[
     ('scaling', StandardScaler())
 ])
 
+
 follower_count_pipeline = Pipeline(steps=[
     ('encoding', FollowerCountEncoder()),
     ('scaling', StandardScaler())
 ])
+
 
 artist_popularity_pipeline = Pipeline(steps=[
     ('encoding', ArtistPopularityEncoder()),
     ('scaling', StandardScaler())
 ])
 
+
 album_name_pipeline = Pipeline(steps=[
     ('encoding', AlbumNameEncoder()),
     ('scaling', StandardScaler())
 ])
 
+
 artist_genres_pipeline = Pipeline(steps=[
     ('encoding', GenreEncoder()),
     ('scaling', StandardScaler())
 ])
+
 
 transformations = ColumnTransformer(transformers=[
     
