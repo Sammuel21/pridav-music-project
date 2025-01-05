@@ -197,6 +197,52 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 
 ### Exploratory Data Analysis
 <!-- TODO: Add key visualizations and findings -->
+**Null analysis**
+- NaNs represented by -1.0
+- Only present in audio features
+**Distribution analysis**
+- Distributions implied outlier values
+<!-- plot numeric distributions -->
+![Numeric attribute distributions](Prod/Images/eda/eda2.png)
+- Possible bias of decreasing popularity with years due to smaller count of older tracks in the dataset
+<!-- mean popularity by year with count plot -->
+![Mean popularity by year of release](Prod/Images/eda/eda4.png)
+**Outlier analysis**
+- We found there is a large amount of outliers in multiple columns such as *year, duration_ms, instrumentalness, liveness, loudness, speechiness and popularity*. 
+- Notable - the mean popularity score is very close to 0, implying that only a fraction of songs become popular. This also proves that we shouldn't eliminate outliers.
+<!-- boxplots grid -->
+![Boxplots of numeric values](Prod/Images/eda/eda5.png).
+- The largerst amount of outliers were present in the instrumentalness attribute, where it seems most values are either very close to 0 or very close to 1.
+**Categorical attributes**
+- The highest mean popularity is among tracks of Korean language.
+<!-- plot popularity by language -->
+![Mean popularity by language](Prod/Images/eda/eda8.png)
+- Most prevalent Keys (Key signatures/ Scales) in the dataset were C, G, and D Major.
+<!-- Keymode counts -->
+![Counts of each Key signature (Key and mode combination)](Prod/Images/eda/eda91.png)
+- Popularity is evenly distributed throughout keys and modes.
+<!-- keymode popularity mean plot-->
+![Popularity by Key and Mode](Prod/Images/eda/eda92.png)
+- Most prevalent time signature is 4/4 (common time) and other time signatures have negligable counts in comparison, which could imply this column would have little to no effect on predicting popularity.
+**Correlation analysis** 
+We computed both spearman and pearson correlation matrices to look for values with highest correlations to popularity: 
+<!-- Corr matrix plot -->
+![Correlation matrices](Prod/Images/eda/eda94.png)
+Columns with highest correlations to popularity:
+
+positive:
+- loudness (0.20)
+- energy (0.15)
+
+negative:
+- acousticness (-0.14)
+- instrumentalness (-0.13)
+- speechiness (-0.05)
+
+These could be the parameters with highest impact on popularity of a track.
+**Normality testing**
+- Shapiro-Wilk normality tests confirmed that no attributes in the dataset were normally distributed.
+
 
 ### Modeling
 <!-- TODO: Add modeling results -->
