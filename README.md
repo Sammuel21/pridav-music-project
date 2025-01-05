@@ -1,9 +1,42 @@
 # pridav-music-project
 Modeling &amp; analysis of music popularity across different genres and artists - project for 1-DAV-302/20 - priDAV
 
-## Data Sources
+## 1. Research Questions and Project Goals
 
-### 1. Kaggle Spotify Dataset
+### Main Research Questions
+<!-- TODO: Add actual research questions -->
+1. Which musical attributes have the greatest impact on track popularity?
+2. How does track popularity vary across different music genres?
+3. To what extent does artist popularity influence overall track popularity?
+
+### Project Objectives
+- Analyze relationships between various music track attributes and their popularity
+- Develop a model to predict music track popularity
+- Identify key factors contributing to model performance
+
+## 2. Tools and Technologies
+
+### Programming Languages and Libraries
+
+#### Languages
+- Python
+
+#### Libraries
+1. Scrapers:
+- requests, pandas, time, typing, os, dotenv, tqdm
+2. Data Processing and Analysis:
+- numpy, pandas, matplotlib, seaborn, warnings
+3. Machine Learning:
+- sklearn, xgboost, os, sys, numpy, pandas, dotenv
+
+### Development Tools
+- Git for version control
+
+## 3. Data Sources and Processing
+
+### Data Sources
+
+#### 1. Kaggle Spotify Dataset
 - Data collected from a Kaggle dataset
     - Couldn't be collected through a scraper due to Spotify removing access for new developer accounts for some Data Points of it's Web API, including the Audio Features, as of late November 2024 ([link to relevant article](https://www.digitalmusicnews.com/2024/12/01/spotify-tightens-api-access-removes-several-data-points/))
 - Link to dataset: [Spotify Tracks Dataset](https://www.kaggle.com/datasets/gauthamvijayaraj/spotify-tracks-dataset-updated-every-week/data)
@@ -39,7 +72,7 @@ Modeling &amp; analysis of music popularity across different genres and artists 
     - `tempo` - Estimated tempo in BPM
     - `time_signature` - Estimated time signature
 
-### 2. Spotify API
+#### 2. Spotify API
 
 - Data collected through Spotify Web API
 - Contains additional track and artist information for Kaggle dataset records
@@ -61,9 +94,9 @@ Modeling &amp; analysis of music popularity across different genres and artists 
         - was calculated by averaging the `artist_popularities` column during the scraping process
         - was removed from modeling due to direct implementation in the pipeline
 
-## Data Collection Process
+### Data Collection Process
 
-### 1. spotify_scraper.py:
+#### 1. spotify_scraper.py:
 
 - <strong>Not used because of deprecated endpoints</strong>
 - Endpoint used:
@@ -89,13 +122,13 @@ Modeling &amp; analysis of music popularity across different genres and artists 
     - Outputs scraped data into a csv file
 - Would have been used to create our own dataset similar to the Kaggle one
 
-### 2. Kaggle Dataset:
+#### 2. Kaggle Dataset:
 
 - Contains over 60,000 records of track data
 - Provides audio features that are no longer accessible via API for new developer accounts
 - Used as our primary data source due to API limitations
 
-### 3. artist_details_scraper.py:
+#### 3. artist_details_scraper.py:
 
 - Enriches track data with additional artist information
 - Endpoints used:
@@ -116,10 +149,40 @@ Modeling &amp; analysis of music popularity across different genres and artists 
     - Handles rate limiting with automatic retries
     - Outputs enriched data into a csv file
 
-## Data Cleaning And Preprocessing
+### Data Cleaning
 
+#### Data Quality Issues
 <!-- TODO -->
 
-## Data Storage
+#### Preprocessing Steps
+<!-- TODO -->
 
-The data files are stored locally in the `Development/{username}/Data` directory for each developer.
+#### Feature Engineering
+<!-- TODO -->
+
+### Data Storage
+
+The data files are stored locally in the `Development/{student_handle}/Data` directory for each developer.
+
+## 4. Analysis and Results
+
+### Exploratory Data Analysis
+<!-- TODO: Add key visualizations and findings -->
+
+### Modeling
+<!-- TODO: Add modeling results -->
+(Description of models used, results, and interpretation)
+
+### Key Findings
+<!-- TODO: Add key findings -->
+(Most important factors affecting popularity, variable relationships, genre related patterns)
+
+## 5. Conclusions and Limitations
+
+### Conclusions
+<!-- TODO: Add conclusions -->
+(Summary of main findings, answers to research questions)
+
+### Limitations
+<!-- TODO: Add limitations -->
+(Data limitations, model limitations)
