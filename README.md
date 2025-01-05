@@ -184,6 +184,7 @@ All of the numerical data (encoded data as well) has been standardized in nested
 Automated Pipeline Architecture:
 
 <!-- INSERT IMAGE -->
+![Automated Pipeline Architecture](Prod/Images/preprocessing_pipeline.png)
 
 
 #### Feature Engineering
