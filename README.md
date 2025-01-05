@@ -171,6 +171,16 @@ Custom transformations:
 - custom-defined encoding of categorical data
 - custom-defined aggregation strategies
 
+The following columns required custom preprocessing transformation to correctly represent information, standard categorical encoding would cause massive column addition to the dataset.
+
+- Artist_name: encoded as frequency of the artist in the dataset
+- Mode: encoded based on "Circle of Fifths" musical theory
+- Artist_followers: list-like value, column independent, aggregation on row basis
+- Artist_popularities: list-like value, column independent, aggregation on row basis
+- Album_name: frequency occurance encoding
+
+All of the numerical data (encoded data as well) has been standardized in nested pipelines.
+
 Automated Pipeline Architecture:
 
 <!-- INSERT IMAGE -->
