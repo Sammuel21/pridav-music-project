@@ -152,10 +152,29 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 ### Data Cleaning
 
 #### Data Quality Issues
-<!-- TODO -->
+
+Multiple steps were subject of the data quality control such as:
+- Null controls
+- Data anomalies/corrupted fields
+
+Missing data in the source datasets was represented using value -1, we developed an ETL mechanism to automate conversion to np.NaN.
 
 #### Preprocessing Steps
-<!-- TODO -->
+
+We have applied general recommended data preprocessing transformations as well as custom-defined transformations regarding some attributes.
+
+General transformations:
+- Scaling numerical data
+- Encoding categorical data based on One-Hot encoding principle
+
+Custom transformations:
+- custom-defined encoding of categorical data
+- custom-defined aggregation strategies
+
+Automated Pipeline Architecture:
+
+<!-- INSERT IMAGE -->
+
 
 #### Feature Engineering
 <!-- TODO -->
