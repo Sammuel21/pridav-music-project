@@ -334,6 +334,15 @@ The popularity is also not very well represented in the dataset, with the median
 
 #### 2. Which musical attributes have the greatest impact on track popularity?
 
+To answer this question we will analyse the attribute weights form the best estimator (optimized XGBoost regressor).
+
+![Optimized XGBoost weights](Prod/Images/ensemble-models-comparison-2.png)
+
+According to the best XGBoost model with test R^2 ~ 0.6, the most important parameters were english and korean language as well as data regarding the artist - genre, artist popularity
+and artist data aggregations, no acustic data was present, this means (as expected) that the author of the track as well as marketing elements regarding the producer are far more important
+elements than acustic data.
+
+
 <!-- TO DO -->
 
 #### 3. To what extent do acoustic vs artist attributes influence overall track popularity?
