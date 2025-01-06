@@ -192,7 +192,6 @@ All of the numerical data (encoded data as well) has been standardized in nested
 
 Automated Pipeline Architecture:
 
-<!-- INSERT IMAGE -->
 ![Automated Pipeline Architecture](Prod/Images/preprocessing_pipeline.png)
 
 ### Data Storage
@@ -203,7 +202,6 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 
 ### Exploratory Data Analysis
 
-<!-- TODO: Add key visualizations and findings -->
 **Null analysis**
 
 - NaNs represented by -1.0
@@ -267,15 +265,9 @@ These could be the parameters with highest impact on popularity of a track.
 
 **1. Linear Regression**
 
-<!-- TO DO -->
-
 **2. Ridge Regression**
 
-<!-- TO DO -->
-
 **3. Lasso Regression**
-
-<!-- TO DO -->
 
 The basic toolkit of linear models was used in the project - linear regression as a foundation and it's penalized version's to control the parameter weights. Generally
 linear models did not perform well, this indicates that the relationships and patterns in data could not be explained lineary. As a countermeasure we have decided to utilize
@@ -285,14 +277,14 @@ ensemble methods. The results of linear models can be found below:
 
 Unfortunately we have not achieved even test R^2 = 0.5, however this could be expected from analyses before as none of the data was normally distributed, large presence of outliers...
 
-![linear models summary](/Prod/Images/linear-models-r2-summary-1.png)
+![linear models summary](Prod/Images/linear-models-r2-summary-1.png)
 
 **Ridge attribute importance**
 
 The optimized Ridge regression model proved to be the best out of the linear models overall, both optimized and benchmark included. Below you can find the weight allocation and importance of
 parameters:
 
-![Optimized Ridge weights](/Prod/Images/linear-models-attribute-weights-2.png)
+![Optimized Ridge weights](Prod/Images/linear-models-attribute-weights-2.png)
 
 In contrast to results which can be found below regarding the optmized XGBoost, here the acustic attributes proved to be the higher movers, this however is not sufficient enough to perform any
 meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
@@ -304,11 +296,10 @@ meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
 
 - Gradient boosting model optimized for performance
 - Best Hyperparameters found:
-  - can be found in exported model
+  - can be found in exported model, or in `model_hyperparameters.txt`
 - Model Performance:
   - Train R^2 = 0.7 -> 0.71
   - Test R^2 = 0.55 -> 0.58
-  <!-- TO DO -->
 
 **XGBoost Regressor** proved to be a much better choice in modeling popularity than linear models, this algorithm combines multiple gradient boosting algorithms to create a complex system
 which centralizes the output. With optimization we have managed to climb up to the Test R^2 = 0.58. The optimization has been performed using Randomized search with 100 iterations and 5-fold
@@ -320,7 +311,7 @@ Random-searhc optimization reseach:
 
 **Comparison of XGBoost Regressor & Linear models**:
 
-![XGBoost vs linear models](/Prod/Images/ensemble-linear-models-comparison-r2-1.png)
+![XGBoost vs linear models](Prod/Images/ensemble-linear-models-comparison-r2-1.png)
 
 
 
@@ -339,9 +330,6 @@ Random-searhc optimization reseach:
   - R2:  0.5877873398407145
 
 ### Key Findings
-
-<!-- TODO: Add key findings -->
-(Most important factors affecting popularity, variable relationships)
 
 Key takeaway of the project is that we did not have enough data to reliably model popularity prediction, this lack of data is present both in attribute selection as well as proper
 distribution of data in geographical and popularity terms. There are many songs which popularity is equal to 0, in addition the popularity average goes down with the year of release of the song
@@ -382,14 +370,10 @@ According to the best XGBoost model with test R^2 ~ 0.6, the most important para
 and artist data aggregations, no acustic data was present, this means (as expected) that the author of the track as well as marketing elements regarding the producer are far more important
 elements than acustic data.
 
-<!-- TO DO -->
-
 #### 3. To what extent do acoustic vs artist attributes influence overall track popularity?
 
 Music production is an industry where artist & producer fame are the key driving factors - artist fame is the key indicator of track's success as consumers maily consume already existing and established producers, hence we can state that the data regarding artists, producers, related promotions and marketing acvity (spending) is far more important that acustic parameters of tracks,
 the reason being is that are predicting SENTIMENTAL value not a relationship anchored in physical laws and natural processes.
-
-<!-- TO DO -->
 
 ### Limitations
 
