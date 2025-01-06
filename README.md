@@ -4,12 +4,14 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 ## 1. Research Questions and Project Goals
 
 ### Main Research Questions
+
 <!-- TODO: Add actual research questions -->
 1. Which musical attributes have the greatest impact on track popularity?
 2. How does track popularity vary across different music genres?
 3. To what extent does artist popularity influence overall track popularity?
 
 ### Project Objectives
+
 - Analyze relationships between various music track attributes and their popularity
 - Develop a model to predict music track popularity
 - Identify key factors contributing to model performance
@@ -19,9 +21,11 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 ### Programming Languages and Libraries
 
 #### Languages
+
 - Python
 
 #### Libraries
+
 1. Scrapers:
 - requests, pandas, time, typing, os, dotenv, tqdm
 2. Data Processing and Analysis:
@@ -30,6 +34,7 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 - sklearn, xgboost, os, sys, numpy, pandas, dotenv
 
 ### Development Tools
+
 - Git for version control
 
 ## 3. Data Sources and Processing
@@ -37,6 +42,7 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 ### Data Sources
 
 #### 1. Kaggle Spotify Dataset
+
 - Data collected from a Kaggle dataset
     - Couldn't be collected through a scraper due to Spotify removing access for new developer accounts for some Data Points of it's Web API, including the Audio Features, as of late November 2024 ([link to relevant article](https://www.digitalmusicnews.com/2024/12/01/spotify-tightens-api-access-removes-several-data-points/))
 - Link to dataset: [Spotify Tracks Dataset](https://www.kaggle.com/datasets/gauthamvijayaraj/spotify-tracks-dataset-updated-every-week/data)
@@ -188,6 +194,7 @@ Automated Pipeline Architecture:
 
 
 #### Feature Engineering
+
 <!-- TODO -->
 
 ### Data Storage
@@ -197,24 +204,32 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 ## 4. Analysis and Results
 
 ### Exploratory Data Analysis
+
 <!-- TODO: Add key visualizations and findings -->
 **Null analysis**
+
 - NaNs represented by -1.0
 - Only present in audio features
+
 **Distribution analysis**
+
 - Distributions implied outlier values
 <!-- plot numeric distributions -->
 ![Numeric attribute distributions](Prod/Images/eda/eda2.png)
 - Possible bias of decreasing popularity with years due to smaller count of older tracks in the dataset
 <!-- mean popularity by year with count plot -->
 ![Mean popularity by year of release](Prod/Images/eda/eda4.png)
+
 **Outlier analysis**
+
 - We found there is a large amount of outliers in multiple columns such as *year, duration_ms, instrumentalness, liveness, loudness, speechiness and popularity*. 
 - Notable - the mean popularity score is very close to 0, implying that only a fraction of songs become popular. This also proves that we shouldn't eliminate outliers.
 <!-- boxplots grid -->
 ![Boxplots of numeric values](Prod/Images/eda/eda5.png).
 - The largerst amount of outliers were present in the instrumentalness attribute, where it seems most values are either very close to 0 or very close to 1.
+
 **Categorical attributes**
+
 - The highest mean popularity is among tracks of Korean language.
 <!-- plot popularity by language -->
 ![Mean popularity by language](Prod/Images/eda/eda8.png)
@@ -225,7 +240,9 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 <!-- keymode popularity mean plot-->
 ![Popularity by Key and Mode](Prod/Images/eda/eda92.png)
 - Most prevalent time signature is 4/4 (common time) and other time signatures have negligable counts in comparison, which could imply this column would have little to no effect on predicting popularity.
+
 **Correlation analysis** 
+
 We computed both spearman and pearson correlation matrices to look for values with highest correlations to popularity: 
 <!-- Corr matrix plot -->
 ![Correlation matrices](Prod/Images/eda/eda94.png)
@@ -241,24 +258,30 @@ negative:
 - speechiness (-0.05)
 
 These could be the parameters with highest impact on popularity of a track.
+
 **Normality testing**
+
 - Shapiro-Wilk normality tests confirmed that no attributes in the dataset were normally distributed.
 
 
 ### Modeling
+
 <!-- TODO: Add modeling results -->
 (Description of models used, results, and interpretation)
 
 ### Key Findings
+
 <!-- TODO: Add key findings -->
 (Most important factors affecting popularity, variable relationships, genre related patterns)
 
 ## 5. Conclusions and Limitations
 
 ### Conclusions
+
 <!-- TODO: Add conclusions -->
 (Summary of main findings, answers to research questions)
 
 ### Limitations
+
 <!-- TODO: Add limitations -->
 (Data limitations, model limitations)
