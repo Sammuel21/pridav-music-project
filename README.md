@@ -354,6 +354,9 @@ No, there is a bias towards more recent releases with the earliest release year 
 
 There is also a bias towards specific languages, as there are only 6 different languages, plus an unknown category, represented in the dataset with unequal distribution.
 
+We can see a clear bias towards **south-east asia** region, since the most prominent languages are of indian and korean origin, although english is present we must remember that english
+is also used prelevantly in India.
+
 ![Year and Language distribution](Prod/Images/research_questions/q_1.png)
 
 #### 2. Which musical attributes have the greatest impact on track popularity?
