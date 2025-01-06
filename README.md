@@ -344,6 +344,13 @@ These could be the parameters with highest impact on popularity of a track.
 <!-- TODO: Add key findings -->
 (Most important factors affecting popularity, variable relationships, genre related patterns)
 
+Key takeaway of the project is that we did not have enough data to reliably model popularity prediction, this lack of data is present both in attribute selection as well as proper
+distribution of data in geographical and popularity terms. There are many songs which popularity is equal to 0, in addition the popularity average goes down with the year of release of the song
+this might imply that older songs are more popular, however we must keep in mind that this could be due to bias because the counts on of the songs released before year 2000 are uncomparable in counts
+to recent songs.
+
+
+
 ## 5. Conclusions and Limitations
 
 ### Conclusions
