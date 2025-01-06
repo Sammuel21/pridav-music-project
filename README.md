@@ -10,9 +10,6 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 1. Is the data representative on a global scale and release year basis?
 2. Which musical attributes have the greatest impact on track popularity?
 3. To what extent do acoustic vs artist attributes influence overall track popularity?
-1. Is the data representative on a global scale and release year basis?
-2. Which musical attributes have the greatest impact on track popularity?
-3. To what extent do acoustic vs artist attributes influence overall track popularity?
 
 ### Project Objectives
 
@@ -34,16 +31,11 @@ Modeling &amp; analysis of music popularity across different genres and artists 
 - requests, pandas, time, typing, os, dotenv, tqdm
 2. Data Processing and Analysis:
 - numpy, pandas, matplotlib, seaborn, warnings, ...
-- numpy, pandas, matplotlib, seaborn, warnings, ...
 3. Machine Learning:
-- sklearn, xgboost, os, sys, numpy, pandas, dotenv, ...
 - sklearn, xgboost, os, sys, numpy, pandas, dotenv, ...
 
 ### Development Tools
 
-- GitHub
-- Jupyter Notebook
-- Visual Studio Code or other IDE
 - GitHub
 - Jupyter Notebook
 - Visual Studio Code or other IDE
@@ -248,7 +240,6 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 - Most prevalent time signature is 4/4 (common time) and other time signatures have negligable counts in comparison, which could imply this column would have little to no effect on predicting popularity.
 
 **Correlation analysis**
-**Correlation analysis**
 
 We computed both spearman and pearson correlation matrices to look for values with highest correlations to popularity: 
 <!-- Corr matrix plot -->
@@ -270,36 +261,8 @@ These could be the parameters with highest impact on popularity of a track.
 
 - Shapiro-Wilk normality tests confirmed that no attributes in the dataset were normally distributed.
 
-
 ### Modeling
 
-#### Linear models
-
-1. Linear Regression
-<!-- TO DO -->
-
-2. Ridge Regression
-<!-- TO DO -->
-
-3. Lasso Regression
-<!-- TO DO -->
-
-#### Ensemble models
-
-1. XGBoost
-- Gradient boosting model optimized for performance
-- Best Hyperparameters found:
-  <!-- TO DO -->
-- Model Performance:
-  <!-- TO DO -->
-
-2. Random Forest
-- Ensemble of decision trees with bagging
-- Was not optimized, as after 14 hours of running it did not complete, and then logging showed there was no actual progress being made
-- Best Hyperparameters found:
-<!-- TO DO -->
-- Model Performance:
-<!-- TO DO -->
 #### Linear models
 
 **1. Linear Regression**
@@ -337,12 +300,11 @@ These could be the parameters with highest impact on popularity of a track.
   - MSE:  147.00475324692562
   - RMSE:  12.124551671997015
   - R2:  0.5877873398407145
-<!-- TO DO -->
 
 ### Key Findings
 
 <!-- TODO: Add key findings -->
-(Most important factors affecting popularity, variable relationships, genre related patterns)
+(Most important factors affecting popularity, variable relationships)
 
 Key takeaway of the project is that we did not have enough data to reliably model popularity prediction, this lack of data is present both in attribute selection as well as proper
 distribution of data in geographical and popularity terms. There are many songs which popularity is equal to 0, in addition the popularity average goes down with the year of release of the song
@@ -365,6 +327,10 @@ We can see a clear bias towards **south-east asia** region, since the most promi
 is also used prelevantly in India.
 
 ![Year and Language distribution](Prod/Images/research_questions/q_1.png)
+
+The popularity is also not very well represented in the dataset, with the median score being only 7 on a scale from 0 to 100. Over 28% of the data has a score of 0.
+
+![Popularity distribution](Prod/Images/research_questions/q_1_pop.png)
 
 #### 2. Which musical attributes have the greatest impact on track popularity?
 
