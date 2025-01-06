@@ -248,7 +248,6 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 - Most prevalent time signature is 4/4 (common time) and other time signatures have negligable counts in comparison, which could imply this column would have little to no effect on predicting popularity.
 
 **Correlation analysis**
-**Correlation analysis**
 
 We computed both spearman and pearson correlation matrices to look for values with highest correlations to popularity: 
 <!-- Corr matrix plot -->
