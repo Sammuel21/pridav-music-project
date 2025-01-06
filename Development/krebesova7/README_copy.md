@@ -303,6 +303,7 @@ These could be the parameters with highest impact on popularity of a track.
 1. Is the data representative on a global scale and release year basis?
 No, there is a bias towards more recent releases with the earliest release year being 1971, latest being 2024, but the median being 2017. 
 There is also a bias towards specific languages, as there are only 6 different languages, plus an unknown category, represented in the dataset with unequal distribution.
+<!-- Add image -->
 ![Year and Language distribution](Prod/Images/research_questions/q_1.png)
 2. Which musical attributes have the greatest impact on track popularity?
 3. To what extent do acoustic vs artist attributes influence overall track popularity?
