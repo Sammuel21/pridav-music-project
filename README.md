@@ -382,13 +382,12 @@ According to the best XGBoost model with test R^2 ~ 0.6, the most important para
 and artist data aggregations, no acustic data was present, this means (as expected) that the author of the track as well as marketing elements regarding the producer are far more important
 elements than acustic data.
 
-Music production is an industry where artist & producer fame are the key driving factors - artist fame is the key indicator of track's success as consumers maily consume already existing and established producers.
-
-
-
 <!-- TO DO -->
 
 #### 3. To what extent do acoustic vs artist attributes influence overall track popularity?
+
+Music production is an industry where artist & producer fame are the key driving factors - artist fame is the key indicator of track's success as consumers maily consume already existing and established producers, hence we can state that the data regarding artists, producers, related promotions and marketing acvity (spending) is far more important that acustic parameters of tracks,
+the reason being is that are predicting SENTIMENTAL value not a relationship anchored in physical laws and natural processes.
 
 <!-- TO DO -->
 
