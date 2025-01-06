@@ -221,8 +221,8 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 - We found there is a large amount of outliers in multiple columns such as *year, duration_ms, instrumentalness, liveness, loudness, speechiness and popularity*. 
 - Notable - the mean popularity score is very close to 0, implying that only a fraction of songs become popular. This also proves that we shouldn't eliminate outliers.
 <!-- boxplots grid -->
-![Boxplots of numeric values](Prod/Images/eda/eda5.png).
-- The largerst amount of outliers were present in the instrumentalness attribute, where it seems most values are either very close to 0 or very close to 1.
+![Boxplots of numeric values](Prod/Images/eda/eda5.png)
+- The largest amount of outliers were present in the instrumentalness attribute, where it seems most values are either very close to 0 or very close to 1.
 
 **Categorical attributes**
 
@@ -235,7 +235,7 @@ The data files are stored locally in the `Development/{student_handle}/Data` dir
 - Popularity is evenly distributed throughout keys and modes.
 <!-- keymode popularity mean plot-->
 ![Popularity by Key and Mode](Prod/Images/eda/eda92.png)
-- Most prevalent time signature is 4/4 (common time) and other time signatures have negligable counts in comparison, which could imply this column would have little to no effect on predicting popularity.
+- Most prevalent time signature is 4/4 (common time) and other time signatures have negligible counts in comparison, which could imply this column would have little to no effect on predicting popularity.
 
 **Correlation analysis**
 
@@ -269,8 +269,8 @@ These could be the parameters with highest impact on popularity of a track.
 
 **3. Lasso Regression**
 
-The basic toolkit of linear models was used in the project - linear regression as a foundation and it's penalized version's to control the parameter weights. Generally
-linear models did not perform well, this indicates that the relationships and patterns in data could not be explained lineary. As a countermeasure we have decided to utilize
+The basic toolkit of linear models was used in the project - linear regression as a foundation and its penalized versions to control the parameter weights. Generally
+linear models did not perform well, this indicates that the relationships and patterns in data could not be explained linearly. As a countermeasure we have decided to utilize
 ensemble methods. The results of linear models can be found below:
 
 **Linear models summary:**
@@ -286,7 +286,7 @@ parameters:
 
 ![Optimized Ridge weights](Prod/Images/linear-models-attribute-weights-2.png)
 
-In contrast to results which can be found below regarding the optmized XGBoost, here the acustic attributes proved to be the higher movers, this however is not sufficient enough to perform any
+In contrast to results which can be found below regarding the optimized XGBoost, here the acoustic attributes proved to be the higher movers. This however is not sufficient enough to perform any
 meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
 
 
@@ -303,9 +303,9 @@ meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
 
 **XGBoost Regressor** proved to be a much better choice in modeling popularity than linear models, this algorithm combines multiple gradient boosting algorithms to create a complex system
 which centralizes the output. With optimization we have managed to climb up to the Test R^2 = 0.58. The optimization has been performed using Randomized search with 100 iterations and 5-fold
-cross-validation. Based on research listed bellow you can find the top 5% parameters (CI = 95%) with just 60 iterations of randomsearch.
+cross-validation. Based on research listed below you can find the top 5% parameters (CI = 95%) with just 60 iterations of random search.
 
-Random-searhc optimization reseach:
+Random-search optimization research:
 - https://web.archive.org/web/20160701182750/http://blog.dato.com/how-to-evaluate-machine-learning-models-part-4-hyperparameter-tuning
 
 
@@ -374,7 +374,7 @@ F1 score: `0.028898254063816978`
 
 **4. LightGBM with SMOTE**
 
-Combining LightGBM with SMOTE yieleded, so far, the best results. With a recall rate of `0.47` and only 4% of false positives, this has been the most successful model out of all tested.
+Combining LightGBM with SMOTE yielded, so far, the best results. With a recall rate of `0.47` and only 4% of false positives, this has been the most successful model out of all tested.
 
 LightGBM with SMOTE ROC AUC Score: `0.9050992779783393`
 
@@ -396,7 +396,7 @@ F1 score (SMOTE): `0.0898876404494382`
 
 To further improve our results, we try optimizing our best performing model (LightGBM with SMOTE).
 
-Best paremeters found:
+Best parameters found:
 - 'classification__subsample': 0.4
 - 'classification__scale_pos_weight': 147.16236162361625
 - 'classification__num_leaves': 127
@@ -412,7 +412,7 @@ Optimized LightGBM with SMOTE ROC AUC Score: `0.9125225631768953`
 
 F1 score `0.11042944785276074`
 
-As we can see, hyperparemeter optimizing has resulted in worse scores than using the default settings.
+As we can see, hyperparameter optimizing has resulted in worse scores than using the default settings.
 
 ### Key Findings
 
@@ -421,11 +421,11 @@ distribution of data in geographical and popularity terms. There are many songs 
 this might imply that older songs are more popular, however we must keep in mind that this could be due to bias because the counts on of the songs released before year 2000 are uncomparable in counts
 to recent songs.
 
-Another finding was that the data relationship and patterns are not linear, as linear models failed miserably to explain the data - this is not a fault of overfitting as we had ~60 000 tracks and ~130 parameters. It is noteworthy however to say, that outlier impact analysis has not been performed on model level.
+Another finding was that the data relationships and patterns are non-linear, as linear models failed miserably to explain the data - this is not a fault of overfitting as we had ~60 000 tracks and ~130 parameters. It should be noted that outlier impact analysis has not been performed on model level.
 
-It is noteworthly to state that optimization process was much more important in linear models than in ensemble methods. Optimizing ensemble (XGBoost) did improve the performance but not by a significant margin, however when it came to linear models the performance was more than doubled, this shows the importance of optimization in linear models. The change in performance could be attributed to cross validation as general linear regression does not have many hyperparameters to tune but the performance improvement was significant.
+It is also important to state that optimization process was much more important in linear models than in ensemble methods. Optimizing ensemble (XGBoost) did improve the performance but not by a significant margin, however when it came to linear models the performance was more than doubled. This shows the importance of optimization in linear models. The change in performance could be attributed to cross validation as general linear regression does not have many hyperparameters to tune but the performance improvement was significant.
 
-Instead, focusing on classifying whether a song is popular or not has yielded undecisive results. Even after addressing the poor class balance of the dataset, the models seemed to not differ much with the exception of LightGBM with oversampling. Even then, the model seemed to miss more than half popular songs.
+Instead, focusing on classifying whether a song is popular or not has yielded indecisive results. Even after addressing the poor class balance of the dataset, the models seemed to not differ much with the exception of LightGBM with oversampling. Even then, the model seemed to miss more than half popular songs.
 
 ## 5. Conclusions and Limitations
 
@@ -437,8 +437,8 @@ No, there is a bias towards more recent releases with the earliest release year 
 
 There is also a bias towards specific languages, as there are only 6 different languages, plus an unknown category, represented in the dataset with unequal distribution.
 
-We can see a clear bias towards **south-east asia** region, since the most prominent languages are of indian and korean origin, although english is present we must remember that english
-is also used prelevantly in India.
+We can see a clear bias towards **South-East Asia** region, since the most prominent languages are of Indian and Korean origin, although English is present we must remember that English
+is also used prevalently in India.
 
 ![Year and Language distribution](Prod/Images/research_questions/q_1.png)
 
@@ -452,14 +452,14 @@ To answer this question we will analyse the attribute weights form the best esti
 
 ![Optimized XGBoost weights](Prod/Images/ensemble-models-comparison-2.png)
 
-According to the best XGBoost model with test R^2 ~ 0.6, the most important parameters were english and korean language as well as data regarding the artist - genre, artist popularity
-and artist data aggregations, no acustic data was present, this means (as expected) that the author of the track as well as marketing elements regarding the producer are far more important
-elements than acustic data.
+According to the best XGBoost model with test R^2 ~ 0.6, the most important parameters were English and Korean language as well as data regarding the artist - genre, artist popularity
+and artist data aggregations, no acoustic data was present, this means (as expected) that the author of the track as well as marketing elements regarding the producer are far more important
+elements than acoustic data.
 
 #### 3. To what extent do acoustic vs artist attributes influence overall track popularity?
 
-Music production is an industry where artist & producer fame are the key driving factors - artist fame is the key indicator of track's success as consumers maily consume already existing and established producers, hence we can state that the data regarding artists, producers, related promotions and marketing acvity (spending) is far more important that acustic parameters of tracks,
-the reason being is that are predicting SENTIMENTAL value not a relationship anchored in physical laws and natural processes.
+Music production is an industry where artist & producer fame are the key driving factors - artist fame is the key indicator of track's success as consumers mainly consume already existing and established producers, hence we can state that the data regarding artists, producers, related promotions and marketing activity (spending) is far more important than acoustic parameters of tracks,
+the reason being is that we are predicting SENTIMENTAL value not a relationship anchored in physical laws and natural processes.
 
 ### Limitations
 
