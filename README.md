@@ -329,6 +329,91 @@ Random-searhc optimization reseach:
   - RMSE:  12.124551671997015
   - R2:  0.5877873398407145
 
+**3. LightBGM**
+
+- Gradient boosting model using tree based learning algorithms
+- Best achieved results after optimizing hyperparameters:
+  - `RMSE`: 15.10122790103981
+  - `R^2`: 0.36053839682026523
+- Best parameters found: `{'colsample_bytree': 0.8, 'learning_rate': 0.07, 'max_depth': -1, 'num_leaves': 255, 'subsample': 0.2}`
+- Feature importance has shown that the model based popularity mostly off the individual albums and artists
+  
+![LightGBM feature importance](Prod/Images/lightgbm/feature_importance.png)
+
+- This model has not proven to reliably predict the song's popularity any better than other models. In fact, it has performed worse.
+
+### Classification
+
+Since there was little success predicting the exact popularity, we decided to turn our analysis into a binary classification problem, where a song could either be popular, or unpopular. The line for a popular song has been arbitrarily chosen as "having `popularity` greater than or equal to `75`". However, the dataset was heavily imbalanced, even after removing `0` popularity entries, with only `301` popular songs compared to the `44313` unpopular ones.
+
+![Popular and unpopular song counts](Prod/Images/classification/popcount.png)
+
+**1. Random Forest Classifier**
+
+Unsurprisingly, the results of this one were terrible, due to imbalances in the set - achieving `0` recall rate with some false positives.
+
+Random Forest ROC AUC Score: `0.7638086642599278`
+
+F1 score: `0.0`
+
+**2. Random Forest with SMOTE**
+
+Here, we decided to address the imbalance by oversampling the popular songs using the SMOTE method. While getting some false positives, we also managed to get a few true positives. However, the recall rate was still only `0.07`.
+
+Random Forest with SMOTE ROC AUC Score: `0.8574984957882069`
+
+F1 score: `0.07407407407407407`
+
+**3. LightGBM**
+
+Next, we try using a gradient boosting method. We address the class imbalance using parameters of the classifier itself.Using this method we manage to achieve a recall rate of `0.80`. However, this also introduces around 36% false positives.
+
+LightGBM ROC AUC Score: `0.7291629061371843`
+
+F1 score: `0.028898254063816978`
+
+**4. LightGBM with SMOTE**
+
+Combining LightGBM with SMOTE yieleded, so far, the best results. With a recall rate of `0.47` and only 4% of false positives, this has been the most successful model out of all tested.
+
+LightGBM with SMOTE ROC AUC Score: `0.9050992779783393`
+
+F1 score: `0.12121212121212122`
+
+**5. XGBoost and XGBoost with SMOTE**
+
+Results of both of these methods were similar to those of Random Forest with SMOTE. Interestingly, XGBoost performed better *without* the use of SMOTE.
+
+XGBoost ROC AUC Score: `0.9167193140794223`
+
+F1 score: `0.03225806451612903`
+
+XGBoost with SMOTE ROC AUC Score: `0.8945848375451264`
+
+F1 score (SMOTE): `0.0898876404494382`
+
+**6. Hyperparemeter optimization**
+
+To further improve our results, we try optimizing our best performing model (LightGBM with SMOTE).
+
+Best paremeters found:
+- 'classification__subsample': 0.4
+- 'classification__scale_pos_weight': 147.16236162361625
+- 'classification__num_leaves': 127
+- 'classification__n_estimators': 200
+- 'classification__min_child_samples': 20
+- 'classification__max_depth': 5
+- 'classification__learning_rate': 0.1
+- 'classification__colsample_bytree': 0.9000000000000001
+
+Using these settings, we arrive at the following results:
+
+Optimized LightGBM with SMOTE ROC AUC Score: `0.9125225631768953`
+
+F1 score `0.11042944785276074`
+
+As we can see, hyperparemeter optimizing has resulted in worse scores than using the default settings.
+
 ### Key Findings
 
 Key takeaway of the project is that we did not have enough data to reliably model popularity prediction, this lack of data is present both in attribute selection as well as proper
@@ -340,6 +425,7 @@ Another finding was that the data relationship and patterns are not linear, as l
 
 It is noteworthly to state that optimization process was much more important in linear models than in ensemble methods. Optimizing ensemble (XGBoost) did improve the performance but not by a significant margin, however when it came to linear models the performance was more than doubled, this shows the importance of optimization in linear models. The change in performance could be attributed to cross validation as general linear regression does not have many hyperparameters to tune but the performance improvement was significant.
 
+Instead, focusing on classifying whether a song is popular or not has yielded undecisive results. Even after addressing the poor class balance of the dataset, the models seemed to not differ much with the exception of LightGBM with oversampling. Even then, the model seemed to miss more than half popular songs.
 
 ## 5. Conclusions and Limitations
 
@@ -381,6 +467,7 @@ the reason being is that are predicting SENTIMENTAL value not a relationship anc
 
 - Having to use a downloaded dataset instead of a scraped one limited our ability to collect less biased data and create a more representative dataset. It also narrowed our research options and sample size.
 - The downloaded dataset also contained missing values, which could have been avoided if we had used a scraper.
+- The distribution of popularity within the dataset seems to heavily skew towards unpopular songs.
 
 #### Model limitations
 
