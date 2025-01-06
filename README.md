@@ -277,6 +277,27 @@ These could be the parameters with highest impact on popularity of a track.
 
 <!-- TO DO -->
 
+The basic toolkit of linear models was used in the project - linear regression as a foundation and it's penalized version's to control the parameter weights. Generally
+linear models did not perform well, this indicates that the relationships and patterns in data could not be explained lineary. As a countermeasure we have decided to utilize
+ensemble methods. The results of linear models can be found below:
+
+**Linear models summary:**
+
+Unfortunately we have not achieved even test R^2 = 0.5, however this could be expected from analyses before as none of the data was normally distributed, large presence of outliers...
+
+![linear models summary](/Prod/Images/linear-models-r2-summary-1.png)
+
+**Ridge attribute importance**
+
+The optimized Ridge regression model proved to be the best out of the linear models overall, both optimized and benchmark included. Below you can find the weight allocation and importance of
+parameters:
+
+![Optimized Ridge weights](/Prod/Images/linear-models-attribute-weights-1.png)
+
+In contrast to results which can be found below regarding the optmized XGBoost, here the acustic attributes proved to be the higher movers, this however is not sufficient enough to perform any
+meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
+
+
 #### Ensemble models
 
 **1. XGBoost**
