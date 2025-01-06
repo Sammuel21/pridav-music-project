@@ -304,12 +304,23 @@ meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
 
 - Gradient boosting model optimized for performance
 - Best Hyperparameters found:
-  <!-- TO DO -->
+  - can be found in exported model
 - Model Performance:
+  - Train R^2 = 0.7 -> 0.71
+  - Test R^2 = 0.55 -> 0.58
   <!-- TO DO -->
 
 **XGBoost Regressor** proved to be a much better choice in modeling popularity than linear models, this algorithm combines multiple gradient boosting algorithms to create a complex system
-which centralizes the output. With optimization we have managed to climb up to the Test R^2 = 0.58.
+which centralizes the output. With optimization we have managed to climb up to the Test R^2 = 0.58. The optimization has been performed using Randomized search with 100 iterations and 5-fold
+cross-validation. Based on research listed bellow you can find the top 5% parameters (CI = 95%) with just 60 iterations of randomsearch.
+
+Random-searhc optimization reseach:
+- https://web.archive.org/web/20160701182750/http://blog.dato.com/how-to-evaluate-machine-learning-models-part-4-hyperparameter-tuning
+
+
+**Comparison of XGBoost Regressor & Linear models**:
+
+![XGBoost vs linear models](/Prod/Images/ensemble-linear-models-comparison-r2-1.png)
 
 
 
