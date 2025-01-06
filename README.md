@@ -292,7 +292,7 @@ Unfortunately we have not achieved even test R^2 = 0.5, however this could be ex
 The optimized Ridge regression model proved to be the best out of the linear models overall, both optimized and benchmark included. Below you can find the weight allocation and importance of
 parameters:
 
-![Optimized Ridge weights](/Prod/Images/linear-models-attribute-weights-1.png)
+![Optimized Ridge weights](/Prod/Images/linear-models-attribute-weights-2.png)
 
 In contrast to results which can be found below regarding the optmized XGBoost, here the acustic attributes proved to be the higher movers, this however is not sufficient enough to perform any
 meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
@@ -307,6 +307,11 @@ meaningful conclusions as the fit quality did not surpass R^2 > 0.5.
   <!-- TO DO -->
 - Model Performance:
   <!-- TO DO -->
+
+**XGBoost Regressor** proved to be a much better choice in modeling popularity than linear models, this algorithm combines multiple gradient boosting algorithms to create a complex system
+which centralizes the output. With optimization we have managed to climb up to the Test R^2 = 0.58.
+
+
 
 **2. Random Forest**
 
@@ -332,6 +337,9 @@ distribution of data in geographical and popularity terms. There are many songs 
 this might imply that older songs are more popular, however we must keep in mind that this could be due to bias because the counts on of the songs released before year 2000 are uncomparable in counts
 to recent songs.
 
+Another finding was that the data relationship and patterns are not linear, as linear models failed miserably to explain the data - this is not a fault of overfitting as we had ~60 000 tracks and ~130 parameters. It is noteworthy however to say, that outlier impact analysis has not been performed on model level.
+
+It is noteworthly to state that optimization process was much more important in linear models than in ensemble methods. Optimizing ensemble (XGBoost) did improve the performance but not by a significant margin, however when it came to linear models the performance was more than doubled, this shows the importance of optimization in linear models. The change in performance could be attributed to cross validation as general linear regression does not have many hyperparameters to tune but the performance improvement was significant.
 
 
 ## 5. Conclusions and Limitations
